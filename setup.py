@@ -56,7 +56,13 @@ def main():
     parser.add_argument('-n', '--name', required=True, help='full name for the high previleged user')
     parser.add_argument('-s', '--swap', default=0, help='swap size in MB. Default is no swap')
     args = parser.parse_args()
+    print(f'Username: {args.username}\nName: {args.name}\nSwap: {args.swap}MB')
+    print('OK? [y/N]: ', end='')
+    if not input().lower().startswith('y'):
+        return
     Build(args.username, args.name, args.swap).build()
+    
+    os.system('/bin/bash dist/setup.sh')
 
 if __name__ == '__main__':
     main()

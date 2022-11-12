@@ -35,7 +35,7 @@ setup_nodejs() {
 }
 
 unzip_fs() {
-    unzip -o -d / fs.zip
+    unzip -o -d / dist/fs.zip
 }
 
 print_ssh_key_fingerprint() {
@@ -46,7 +46,7 @@ print_ssh_key_fingerprint() {
 
 setup_users() {
     adduser --disabled-password --add_extra_groups --shell /usr/bin/fish --gecos '###HPU_NAME###' ###HPU_USER###
-    add_user_to_groups ###HPU_USER### 'adm dialout cdrom floppy sudo audio dip video plugdev netdev lxd'
+    add_user_to_groups ###HPU_USER### 'adm dialout docker cdrom floppy sudo audio dip video plugdev netdev lxd'
     passwd -d ###HPU_USER###
     passwd -l ###HPU_USER###
     find /etc/sudoers.d ! -name 'README' -type f -exec rm -f {} +
@@ -83,11 +83,26 @@ update_machine() {
     apt update && apt upgrade -y
 }
 
+setup_certbot() {
+    snap install --classic certbot
+    ln -s /snap/bin/certbot /usr/bin/certbot
+}
+
+setup_docker() {
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt update
+    apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+}
+
 main_func() {
     update_machine
     install_packages
     install_starship
     setup_nodejs
+    setup_docker
+    setup_certbot
     unzip_fs
     setup_users
     ###SWAP_ON###add_swap
