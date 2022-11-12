@@ -67,7 +67,8 @@ setup_users() {
 }
 
 miscellious_setup(){
-    bash -c 'mkdir -p /opt/server-certificates/self-cert && cd /opt/server-certificates/self-cert && openssl req -x509 -newkey rsa:2048 -keyout privkey.pem -out certificate.pem -days 3650 -subj "/CN=please-supply-valid-hostname" -nodes'
+    bash -c 'mkdir -p /opt/server-certificates/self-cert && cd /opt/server-certificates/self-cert && openssl req -x509 -newkey rsa:2048 -keyout privkey.pem -out certificate.pem -days 3650 -subj "/CN=please-supply-valid-hostname" -nodes' 2>/dev/null
+    apt autoremove -y
 }
 
 add_swap() {
@@ -78,14 +79,19 @@ add_swap() {
     echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
 }
 
+update_machine() {
+    apt update && apt upgrade -y
+}
+
 main_func() {
+    update_machine
     install_packages
     install_starship
     setup_nodejs
     unzip_fs
     setup_users
-    miscellious_setup
     ###SWAP_ON###add_swap
+    miscellious_setup
     print_ssh_key_fingerprint
     reboot
 }

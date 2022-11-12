@@ -27,6 +27,7 @@ class Build:
 
         with open('dist/setup.sh', 'w') as f:
             f.write(self.__script)
+        os.chmod('dist/setup.sh', 0o755)
         print('Done!')
 
     def make_archive(self):
