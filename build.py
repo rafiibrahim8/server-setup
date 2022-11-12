@@ -22,8 +22,8 @@ class Build:
 
         self.replace_packages()
         self.replace_swap()
-        self.make_archive()
         self.replace_user()
+        self.make_archive()
 
         with open('dist/setup.sh', 'w') as f:
             f.write(self.__script)
