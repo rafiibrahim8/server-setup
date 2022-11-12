@@ -1,6 +1,8 @@
 #!/bin/bash
 ## ###BUILD_DATE###
 
+export DEBIAN_FRONTEND=noninteractive
+
 add_user_to_group() {
     if [ $(getent group $2) ]; then
         echo "Adding user \`$1\` to group \`$2\`"
@@ -43,14 +45,14 @@ print_ssh_key_fingerprint() {
 }
 
 setup_users() {
-    adduser --disabled-password --add_extra_groups --shell /usr/bin/fish --gecos 'Ibrahim Rafi' ibra
-    add_user_to_groups ibra 'adm dialout cdrom floppy sudo audio dip video plugdev netdev lxd'
-    passwd -d ibra
-    passwd -l ibra
+    adduser --disabled-password --add_extra_groups --shell /usr/bin/fish --gecos '###HPU_NAME###' ###HPU_USER###
+    add_user_to_groups ###HPU_USER### 'adm dialout cdrom floppy sudo audio dip video plugdev netdev lxd'
+    passwd -d ###HPU_USER###
+    passwd -l ###HPU_USER###
     find /etc/sudoers.d ! -name 'README' -type f -exec rm -f {} +
-    echo "ibra ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10-ibra
-    sudo -u ibra pm2 startup
-    env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ibra --hp /home/ibra
+    echo "###HPU_USER### ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10-###HPU_USER###
+    sudo -u ###HPU_USER### pm2 startup
+    env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ###HPU_USER### --hp /home/###HPU_USER###
 
     adduser --disabled-password --shell /usr/bin/fish --gecos 'Low Privileged User' lpu
     passwd -d lpu

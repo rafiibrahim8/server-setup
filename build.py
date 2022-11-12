@@ -6,6 +6,8 @@ from argparse import ArgumentParser
 class Build:
     def __init__(self, username, name, swap=0):
         self.__swap = int(swap)
+        self.__username = username
+        self.__name = name
         with open('src/setup.sh', 'r') as f:
             self.__script = f.read()
 
@@ -21,6 +23,7 @@ class Build:
         self.replace_packages()
         self.replace_swap()
         self.make_archive()
+        self.replace_user()
 
         with open('dist/setup.sh', 'w') as f:
             f.write(self.__script)
