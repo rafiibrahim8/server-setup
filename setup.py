@@ -61,7 +61,9 @@ def main():
     if not input().lower().startswith('y'):
         return
     Build(args.username, args.name, args.swap).build()
-    
+    print('Run script? [y/N]: ', end='')
+    if not input().lower().startswith('y'):
+        return
     os.system('/bin/bash dist/setup.sh')
 
 if __name__ == '__main__':
