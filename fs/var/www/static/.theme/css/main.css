@@ -1,0 +1,78 @@
+body {
+    margin: 1em;
+    background-color: #009e2c;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #333;
+}
+
+h1 {
+    padding: 1em;
+    color: #666;
+    font-size: 200%;
+}
+
+hr {
+    border-top: 2px solid #e3e3e3;
+}
+
+.modified {
+    padding-left: 8em;
+}
+
+.filesize {
+    padding-left: 4em;
+}
+
+.eceheart {
+    color: #ff0;
+}
+
+code {
+    padding: .2rem .4rem;
+    font-size: 100%;
+    color: #666;
+    background-color: transparent;
+    border-radius: .25rem;
+}
+
+address {
+    color: wheat;
+}
+
+address > a {
+    color: white;
+    text-decoration-line:underline;
+}
+
+table {
+    overflow: hidden;
+    margin: 1em;
+    line-height: 2em;
+}
+
+footer {
+    margin: 1em;
+}
+
+.container{
+    display: block;
+    overflow: auto;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+/*!
+ * Modified from: https://stackoverflow.com/questions/1899772/new-window-icon-for-web-accessibility
+ * Answer by: https://stackoverflow.com/users/465139/laryx-decidua
+ */
+.external::after {
+  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+  margin: 0 3px 0 5px;
+}
