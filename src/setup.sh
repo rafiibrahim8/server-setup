@@ -35,7 +35,7 @@ setup_nodejs() {
 }
 
 unzip_fs() {
-    unzip -o -d / dist/fs.zip
+    unzip -o -d / $ZIP_FILE_LOCATION
 }
 
 print_ssh_key_fingerprint() {
@@ -67,6 +67,8 @@ setup_users() {
 }
 
 miscellious_setup(){
+    mkdir /var/Storage
+    chown ###HPU_USER###:###HPU_USER### /var/Storage
     bash -c 'mkdir -p /opt/server-certificates/self-cert && cd /opt/server-certificates/self-cert && openssl req -x509 -newkey rsa:2048 -keyout privkey.pem -out certificate.pem -days 3650 -subj "/CN=please-supply-valid-hostname" -nodes' 2>/dev/null
     apt autoremove -y
 }
@@ -115,4 +117,14 @@ if [ "$EUID" -ne 0 ]; then
     echo "Please run as root"
     exit
 fi
+
+if [ -f dist/fs.zip ]; then
+    export ZIP_FILE_LOCATION=dist/fs.zip
+elif [ -f fs.zip ]; then
+    export ZIP_FILE_LOCATION=fs.zip
+else
+    echo "fs.zip not found"
+    exit
+fi
+
 main_func
