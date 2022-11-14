@@ -1,5 +1,6 @@
 import os
 import shutil
+from base64 import b64encode
 from datetime import datetime
 from argparse import ArgumentParser
 
@@ -23,6 +24,7 @@ class Build:
         self.replace_packages()
         self.replace_swap()
         self.replace_user()
+        self.replace_user_scripts()
         self.make_archive()
 
         with open('dist/setup.sh', 'w') as f:
@@ -48,7 +50,14 @@ class Build:
     def replace_user(self):
         self.replace('HPU_USER', self.__username)
         self.replace('HPU_NAME', self.__name)
-
+    
+    def replace_user_scripts(self):
+        with open('src/hpu.sh', 'rb') as f:
+            hpu = b64encode(f.read()).decode('utf-8')
+            self.replace('HPU_SCRIPT_B64', hpu)
+        with open('src/lpu.sh', 'rb') as f:
+            lpu = b64encode(f.read()).decode('utf-8')
+            self.replace('LPU_SCRIPT_B64', lpu)
 
 def main():
     parser = ArgumentParser(description='Automate linux server setup')

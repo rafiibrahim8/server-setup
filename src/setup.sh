@@ -66,6 +66,11 @@ setup_users() {
     cp -r /etc/skel/. /root/
 }
 
+run_user_scripts() {
+    sudo -u ###HPU_USER### bash -c "cd /home/###HPU_USER### && echo ###HPU_SCRIPT_B64### | base64 -d | bash"
+    sudo -u lpu bash -c "cd /home/lpu && echo ###LPU_SCRIPT_B64### | base64 -d | bash"
+}
+
 miscellious_setup(){
     mkdir /var/Storage
     chown ###HPU_USER###:###HPU_USER### /var/Storage
@@ -107,6 +112,7 @@ main_func() {
     setup_certbot
     unzip_fs
     setup_users
+    run_user_scripts
     ###SWAP_ON###add_swap
     miscellious_setup
     print_ssh_key_fingerprint
