@@ -28,8 +28,13 @@ install_starship() {
 }
 
 setup_nodejs() {
-    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+    NODE_MAJOR=18
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+    apt update
     apt install -y nodejs
+    
     npm install -g pm2
     npm install -g https://github.com/rafiibrahim8/http-server/tarball/customized
 }
