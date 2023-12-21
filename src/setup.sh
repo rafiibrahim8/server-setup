@@ -18,6 +18,10 @@ add_user_to_groups() {
     done
 }
 
+add_ppas() {
+    apt-add-repository -y ppa:fish-shell/release-3
+}
+
 install_packages() {
     apt update
     apt install -y ###PACKAGES###
@@ -110,6 +114,7 @@ setup_docker() {
 
 main_func() {
     update_machine
+    add_ppas
     install_packages
     install_starship
     setup_nodejs
