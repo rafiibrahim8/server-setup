@@ -17,6 +17,20 @@ if test -d ~/.local/bin
     end
 end
 
+# Add ~/go/bin to PATH
+if test -d ~/go/bin
+    if not contains -- ~/go/bin $PATH
+        set -p PATH ~/go/bin
+    end
+end
+
+# Add ~/.cargo/bin to PATH
+if test -d ~/.cargo/bin                                       
+    if not contains -- ~/.cargo/bin $PATH
+        set -p PATH ~/.cargo/bin                                      
+    end
+end
+
 # Fish command history
 function history
     builtin history --show-time='%F %T '
