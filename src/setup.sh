@@ -39,7 +39,7 @@ setup_nodejs() {
     apt update
     apt install -y nodejs
     
-    npm install -g pm2
+    npm install -g pm2 pnpm
     npm install -g https://github.com/rafiibrahim8/http-server/tarball/customized
 }
 
