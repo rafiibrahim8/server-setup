@@ -9,10 +9,11 @@ style_user = "bold red"
 # Second param
 [hostname]
 disabled = false
-format = "[$hostname]($style) in "
+format = "[$hostname]($style)[$ssh_symbol](bold yellow) in "
 ssh_only = false
 style = "bold dimmed red"
 trim_at = "-"
+ssh_symbol = ' \(🌐 ssh\)'
 
 # Third param
 [directory]
