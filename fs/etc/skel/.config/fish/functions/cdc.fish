@@ -1,15 +1,20 @@
-# Copied from https://fishshell.com/docs/current/cmds/function.html#cmd-function
-
 function cdc -d "Create a directory and set CWD"
-    command mkdir $argv
-    if test $status = 0
-        switch $argv[(count $argv)]
-            case '-*'
-
-            case '*'
-                cd $argv[(count $argv)]
-                return
-        end
+    if test (count $argv) -ne 1
+        echo "Usage: cdc DIR"
+        return 1
     end
-end
 
+    if test -d $argv
+        echo "Directory already exists. Entering..."
+        cd $argv
+        return
+    end
+
+    command mkdir $argv
+
+    if test $status -ne 0
+        return 1
+    end
+
+    cd $argv
+end
