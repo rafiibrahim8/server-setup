@@ -1,6 +1,7 @@
 #!/bin/bash
 ## ###BUILD_DATE###
 
+set -e
 export DEBIAN_FRONTEND=noninteractive
 
 add_user_to_group() {
