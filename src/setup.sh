@@ -61,13 +61,13 @@ setup_users() {
     passwd -l ###HPU_USER###
     find /etc/sudoers.d ! -name 'README' -type f -exec rm -f {} +
     echo "###HPU_USER### ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10-###HPU_USER###
-    sudo -u ###HPU_USER### pm2 startup
+    sudo -u ###HPU_USER### pm2 startup || true
     env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ###HPU_USER### --hp /home/###HPU_USER###
 
     adduser --disabled-password --shell /usr/bin/fish --gecos 'Low Privileged User' lpu
     passwd -d lpu
     passwd -l lpu
-    sudo -u lpu pm2 startup
+    sudo -u lpu pm2 startup || true
     env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u lpu --hp /home/lpu
 
     passwd -d root
