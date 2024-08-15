@@ -78,3 +78,4 @@ alias jctl="journalctl -p 3 -xb"
 alias wget-recursive="wget --recursive  --no-parent --execute 'robots=off' --reject 'index.html*'"
 alias toclip="xclip -selection c"
 alias cat_=/bin/cat
+alias crontab="crontab -i"
