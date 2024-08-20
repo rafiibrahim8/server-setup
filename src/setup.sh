@@ -59,7 +59,7 @@ setup_users() {
     add_user_to_groups ###HPU_USER### 'adm dialout docker cdrom floppy sudo audio dip video plugdev netdev lxd'
     passwd -d ###HPU_USER###
     passwd -l ###HPU_USER###
-    find /etc/sudoers.d ! -name 'README' -type f -exec rm -f {} +
+    find /etc/sudoers.d ! -name 'README' ! -name '00-keep-env' ! -name '01-pwfeedback' -type f -exec rm -f {} +
     echo "###HPU_USER### ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10-###HPU_USER###
     sudo -u ###HPU_USER### pm2 startup || true
     env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ###HPU_USER### --hp /home/###HPU_USER###
